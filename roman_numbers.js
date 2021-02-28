@@ -1,49 +1,63 @@
-let nums = {
-    ones : ['I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII', 'IV'],
-    tens : ['X', 'XX', 'XXX', 'XL', 'L', 'LX', 'LXX', 'LXXX', 'CV', 'C'],
-    hundreds : ['C', 'CX', 'CXX', 'CXXX', 'CD', 'D', 'DC', 'DCC', 'DCCC', 'CM'],
-    thousands : ['M', 'MM', 'MMM']
-}
-
-
 function convertToRoman(num) {
     
-    let answer;
-    console.log(num);
-    let toFix = num;
-    
-    let splitted = toFix.toString().split("");
-    console.log(splitted);
+    let theNum = num.toString().split("");
+    let answerArr = [];
 
-    for(var i = 0; i < splitted.length; i++){
+    if(theNum.length === 1){
+        printOnes(theNum[0]);
+    };
 
-        if(i = 0){
-            answer.unshift(ones.splitted[i]);
-        }
-        else if(i = 1){
-            answer.unshift(tens.splitted[i]);
-        }
-        else if(i = 2){
-            answer.unshift(hundreds.splitted[i]);
-        }
-        else if(i = 3){
-            answer.unshift(thousands.splitted[i]);
-        }
-    }
+    if(theNum.length === 2){
+        printTens(theNum[0]);
+        printOnes(theNum[1]);
+    };
 
-    console.log(answer);
-    /*
-    let toConvertArr = [];
-    let numbers = num;
-    console.log(numbers.length);
-    for(var i = 0; i < numbers.lenght; i++){
-        toConvertArr.push(numbers[i]);
-    }
-    console.log(toConvertArr);
-    */
+    if(theNum.length === 3){
+
+        printHundreds(theNum[0]);
+        printTens(theNum[1]);
+        printOnes(theNum[2]);
+    };
+
+    if(theNum.length === 4){
+        printThousands(theNum[0]);
+        printHundreds(theNum[1]);
+        printTens(theNum[2]);
+        printOnes(theNum[3]);
+    };
+
+         
+        function printOnes (callback){
+            let ones = ['', 'I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII', 'IX'];
+            console.log(ones[callback]);
+            answerArr.push(ones[callback]);
+        };
+
+        function printTens (callback){
+            let tens = ['', 'X', 'XX', 'XXX', 'XL', 'L', 'LX', 'LXX', 'LXXX', 'XC', 'C'];
+            console.log(tens[callback]);
+            answerArr.push(tens[callback]);
+        };
+
+        function printHundreds (callback){
+            let hundreds = ['','C', 'CX', 'CXX', 'CD', 'D', 'DC', 'DCC', 'DCCC', 'CM'];
+            console.log(hundreds[callback]);
+            answerArr.push(hundreds[callback]);
+        };
+
+        function printThousands (callback){
+            let thousands = ['','M', 'MM', 'MMM'];
+            console.log(thousands[callback]);
+            answerArr.push(thousands[callback]);
+        };
+
+
+        answer = answerArr.join("");
+        console.log(answer);
+
     
     return answer;
 }
 
-convertToRoman(36);
+convertToRoman(400);
 
