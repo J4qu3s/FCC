@@ -91,21 +91,30 @@ function checkCashRegister(price, cash, cid) {
     }
   });
 
+  let left = 0;
+  for(var i = 0; i < register.length; i++){
+    console.log(left)
+    left += register[i][1];
+  }
 
-  if(answer.change.length > 0 && returnSum === 0){
+  console.log("Left in register : " + left)
+
+  if(returnSum === 0 && left === 0){
+    answer.status = "CLOSED";
+    answer.change = [...cid];
+  }
+  else if(answer.change.length > 0 && returnSum === 0){
     answer.status = "OPEN";
   }
-  else if(leftInRegister === 0){
-    return {
-      status : "CLOSED", 
-      change : []
-    }
-  } 
-  else if(returnSum > total){
+  
+  else if(returnSum > 0){
     answer.status = "INSUFFICIENT_FUNDS";
+    answer.change = [];
   }
+  
   else {    
       answer.status = "INSUFFICIENT_FUNDS";
+      answer.change = [...cid];
       console.log(returnSum);
   }
   console.log(answer);
@@ -126,3 +135,6 @@ console.log(`Should return : {status: "OPEN", change: [["TWENTY", 60], ["TEN", 2
 
 checkCashRegister(19.5, 20, [["PENNY", 0.01], ["NICKEL", 0], ["DIME", 0], ["QUARTER", 0], ["ONE", 0], ["FIVE", 0], ["TEN", 0], ["TWENTY", 0], ["ONE HUNDRED", 0]]); 
 console.log(`should return {status: "INSUFFICIENT_FUNDS", change: []}`);
+
+checkCashRegister(19.5, 20, [["PENNY", 0.5], ["NICKEL", 0], ["DIME", 0], ["QUARTER", 0], ["ONE", 0], ["FIVE", 0], ["TEN", 0], ["TWENTY", 0], ["ONE HUNDRED", 0]]);
+console.log(`{status: "CLOSED", change: [["PENNY", 0.5], ["NICKEL", 0], ["DIME", 0], ["QUARTER", 0], ["ONE", 0], ["FIVE", 0], ["TEN", 0], ["TWENTY", 0], ["ONE HUNDRED", 0]]}`);
